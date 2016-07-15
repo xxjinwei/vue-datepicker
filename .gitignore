@@ -1,0 +1,23 @@
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Node
+node_modules
+
+# NPM
+npm-debug.log
+
+# SublimeText
+*.sublime-workspace
+*.sublime-project
+
+# JetBrains IDEs
+*.iml
+*.ipr
+*.iws
+.idea/

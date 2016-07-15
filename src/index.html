@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>vue-datepicker</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="../lib/reset.css">
+        <link rel="stylesheet" href="../dist/datepicker.css">
+
+        <script src="../lib/vue.js"></script>
+        <script src="../lib/vue-transfer-dom.js"></script>
+        <script src="../dist/datepicker.js"></script>
+
+    </head>
+    <body>
+
+        <div style="padding: 30px" id="datepicker1">
+            <date-picker></date-picker>
+        </div>
+
+        <div style="padding: 30px" id="datepicker2">
+            <date-picker
+                months="['Jan','Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec']"
+                week="['Sun','Mon','Tue','Wed','Thu','Fri','Sat']"
+                totodaytext="toToday"
+                format="yyyy-mm-dd"
+                yearunit=""
+                value="2016/07/15"
+                mindate="2016/07/10"
+                v-ref:datepicker2
+                >
+            </date-picker>
+        </div>
+
+        <script>
+            var vm = new Vue({
+                el: 'body',
+                data: {
+                    conf: {
+                        format: 'yyyy.mm.dd'
+                    }
+                }
+            })
+
+            var picker = vm.$refs.datepicker2
+
+            picker.setDate('2016/7/7')
+
+            // picker.disable()
+
+            console.log(picker.getDate(), picker.getDateString())
+
+        </script>
+
+    </body>
+
+</html>

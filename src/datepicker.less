@@ -1,0 +1,338 @@
+/**
+ * @file datepicker
+ * @author jinwei01
+ */
+
+@component-name: datepicker;
+
+// cell size
+@cell-width: 30px;
+@cell-height: 30px;
+
+// color
+@white : #fff;
+@black : #333;
+@blue  : #4497ff;
+@silver: #ccc;
+@gray  : #999;
+
+@normal-color        : @black;
+@secondary-color     : @gray;
+@disabled-color      : @silver;
+@active-color        : @blue;
+@cell-hover-color    : @white;
+@cell-hover-bgcolor  : #cae2fe;
+@default-border-color: #dfe2e3;
+@week-bg-color       : #f8f8f8;
+@triangle-icon-color : #666;
+
+.@{component-name} {
+    position: absolute;
+    z-index: 1;
+    font-size: 12px;
+    line-height: 1;
+    color: @normal-color;
+    border: 1px solid @active-color;
+    background-color: @white;
+    user-select: none;
+}
+// header
+.@{component-name}-header {
+    position: relative;
+    padding: 10px 0;
+    text-align: center;
+}
+// calendar
+.@{component-name}-calendar {
+    td,
+    th {
+        text-align: center;
+        vertical-align: middle;
+    }
+    // day of week
+    .@{component-name}-dayofweek {
+        border-top: 1px solid @default-border-color;
+        border-bottom: 1px solid @default-border-color;
+        th {
+            height: 20px;
+            font-weight: normal;
+            color: @secondary-color;
+            background-color: @week-bg-color;
+        }
+    }
+
+    tr {
+        &:before,
+        &:after {
+            content: '';
+            display: table-cell;
+            width: 10px;
+        }
+    }
+    thead tr {
+        &:before,
+        &:after {
+            background-color: @week-bg-color;
+        }
+    }
+
+    tbody {
+        td {
+            width: @cell-width;
+            height: @cell-height;
+            line-height: @cell-height;
+            cursor: pointer;
+            background-clip: content-box;
+
+            &.hidden,
+            &:empty {
+                visibility: hidden;
+            }
+
+            &.disabled {
+                color: @disabled-color;
+                cursor: default;
+            }
+
+            &.selected,
+            &.selected:hover {
+                color: @white;
+                background-color: @active-color !important;
+            }
+
+            &.highlight,
+            &.inrange,
+            &.highlight:hover,
+            &.inrange:hover {
+                background-color: @cell-hover-bgcolor;
+            }
+
+            &.istoday {
+                box-shadow: 0 0 0 1px @active-color inset;
+            }
+
+            &:not(.disabled):not(.selected):not(.inrange):hover {
+                background-color: @cell-hover-bgcolor;
+            }
+        }
+        &.highlight-mode td.inrange:not(.highlight):not(.selected),
+        &.highlight-mode td.inrange:not(.highlight):not(.selected):hover {
+            background-color: inherit !important;
+        }
+    }
+    tfoot {
+        border-top: 1px solid @default-border-color;
+        td {
+            height: @cell-height;
+            vertical-align: middle;
+        }
+        .@{component-name}-today {
+            display: inline-block;
+            padding: 0 15px;
+            color: @active-color;
+            cursor: pointer;
+        }
+    }
+
+}
+// style select
+.@{component-name}-select {
+    position: relative;
+    z-index: 0; // create a stacking context
+    display: inline-block;
+    padding: 3px 24px 3px 8px;
+    border: 1px solid @default-border-color;
+    &.@{component-name}-year {
+        margin-right: 7px;
+        label {
+            width: 40px;
+        }
+    }
+    &.@{component-name}-month {
+        label {
+            width: 26px;
+        }
+    }
+    // label
+    label {
+        display: block;
+        text-align: center;
+    }
+    // opacity select
+    select {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+        width: 100%;
+    }
+    // triangle
+    &:after {
+        content: '';
+        position: absolute;
+        z-index: -1; // move to bottom layer
+        right: 8px;
+        top: 50%;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 4px 4px 0 4px;
+        border-color: @triangle-icon-color transparent transparent transparent;
+        transform: translate(0, -50%);
+    }
+}
+
+// nav
+.@{component-name}-prev-month,
+.@{component-name}-next-month,
+.@{component-name}-prev-year,
+.@{component-name}-next-year {
+    position: absolute;
+    width: 16px;
+    height: 20px;
+    cursor: pointer;
+}
+// prev & next month
+.@{component-name}-prev-month,
+.@{component-name}-next-month {
+    &:after {
+        position: absolute;
+        content: '';
+        display: inline-block;
+        top: 6px;
+        border-style: solid;
+    }
+}
+.@{component-name}-prev-month {
+    left: 20px;
+    &:after {
+        left: 6px;
+        border-width: 4px 4px 4px 0;
+        border-color: transparent @normal-color transparent transparent;
+    }
+    &.disabled:after {
+        border-color: transparent @disabled-color transparent transparent;
+    }
+}
+.@{component-name}-next-month {
+    right: 20px;
+    &:after {
+        right: 6px;
+        border-width: 4px 0 4px 4px;
+        border-color: transparent transparent transparent @normal-color;
+    }
+    &.disabled:after {
+        border-color: transparent transparent transparent @disabled-color;
+    }
+}
+// prev & next month
+.@{component-name}-prev-year,
+.@{component-name}-next-year {
+    &:before,
+    &:after {
+        position: absolute;
+        content: '';
+        display: inline-block;
+        top: 6px;
+        border-style: solid;
+    }
+
+}
+.@{component-name}-prev-year {
+    left: 4px;
+    &:before,
+    &:after {
+        left: 4px;
+        border-width: 4px 4px 4px 0;
+        border-color: transparent @normal-color transparent transparent;
+    }
+    &:after {
+        left: 9px;
+    }
+    &.disabled:before,
+    &.disabled:after {
+        border-color: transparent @disabled-color transparent transparent;
+    }
+}
+.@{component-name}-next-year {
+    right: 4px;
+    &:before,
+    &:after {
+        right: 4px;
+        border-width: 4px 0 4px 4px;
+        border-color: transparent transparent transparent @normal-color;
+    }
+    &:after {
+        right: 9px
+    }
+    &.disabled:before,
+    &.disabled:after {
+        border-color: transparent transparent transparent @disabled-color;
+    }
+}
+
+// datepicker group
+.@{component-name}-group {
+       display: inline-table;
+       box-shadow: 0 0 0 1px @silver inset;
+       font-size: 14px;
+       > * {
+           display: table-cell;
+       }
+       > input {
+           @group-height: 30px;
+           @input-padding-hoziron: unit(10 / 12, em);
+           @disabled-color: @silver;
+           @disabled-bg-color: #f6f8f9;
+           @input-rounded: 2px;
+           @input-border-color: @default-border-color;
+
+           width: 7em;
+           background: transparent !important;
+           vertical-align: middle;
+           height: @group-height - 2;
+           line-height: @group-height - 2;
+           padding-left: @input-padding-hoziron;
+           padding-right: @input-padding-hoziron;
+           border: none;
+           &:focus {
+               outline: none;
+           }
+           &[disabled] {
+               color: @disabled-color;
+               background-color: @disabled-bg-color;
+               border-color: @input-border-color;
+               cursor: default;
+           }
+           // disabled
+           .disabled& ~ .@{component-name}-icon:before {
+               background-position: 0 -38px;
+           }
+       }
+       &.disabled {
+           box-shadow: 0 0 0 1px #f1f1f1 inset;
+       }
+       .@{component-name}-icon {
+           text-align: center;
+           vertical-align: middle;
+           padding-right: 5px;
+           &:before {
+               content: '';
+               position: relative;
+               display: inline-block;
+               width: 16px;
+               height: 16px;
+               background: url(icon.png) 0 0 no-repeat;
+           }
+       }
+       // active
+       &.active {
+           box-shadow: 0 0 0 1px @active-color inset;
+           .@{component-name}-icon {
+               &:before {
+                   background-position: 0 -19px
+               }
+           }
+       }
+}
