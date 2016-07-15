@@ -1,2 +1,2 @@
 # vue-datepicker
-datepicker by vuejs
+baidu-style datepicker by vuejs
