@@ -7,13 +7,19 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="../lib/reset.css">
+        <link rel="stylesheet" href="../dist/reset.css">
         <link rel="stylesheet" href="../dist/datepicker.css">
-
-        <script src="../lib/vue.js"></script>
-        <script src="../lib/vue-transfer-dom.js"></script>
+        <script src="../dist/vue.js"></script>
+        <script src="../dist/vue-transfer-dom.js"></script>
         <script src="../dist/datepicker.js"></script>
-
+        <!-- <script src="http://apps.bdimg.com/libs/require.js/2.1.11/require.min.js"></script> -->
+        <!-- <script>
+            require(['../dist/datepicker'], function () {
+                var vm = new Vue({
+                    el: 'body'
+                })
+            })
+        </script> -->
     </head>
     <body>
 
@@ -25,11 +31,13 @@
             <date-picker
                 months="['Jan','Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec']"
                 week="['Sun','Mon','Tue','Wed','Thu','Fri','Sat']"
+                yearrange="[1990, 2040]"
                 totodaytext="toToday"
                 format="yyyy-mm-dd"
                 yearunit=""
                 value="2016/07/15"
                 mindate="2016/07/10"
+                :conf="datepickerConf" 
                 v-ref:datepicker2
                 >
             </date-picker>
@@ -39,7 +47,7 @@
             var vm = new Vue({
                 el: 'body',
                 data: {
-                    conf: {
+                    datepickerConf: {
                         format: 'yyyy.mm.dd'
                     }
                 }

@@ -1,12 +1,12 @@
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define([], factory);
+    define(['./vue-transfer-dom'], factory)
   } else if (typeof exports === 'object') {
-    module.exports = factory();
+    factory(require('./vue-transfer-dom'))
   } else {
-    root.Datepicker = factory();
+    factory(root.VueTransferDom)
   }
-}(this, function() {
+}(this, function(VueTransferDom) {
 /**!
  * @file vue-datepicker
  * @author jinwei01
@@ -52,18 +52,17 @@ function parseDateString (date, format) {
 // today
 var TODAY = parseDate(new Date)
 
-var idCounter    = 0
+var idCounter = 0
 
 var defaultConf = {
     format   : 'yyyy/mm/dd',
     yearrange: [2000, 2020],
 
-    i18n  : {
-        yearunit   : '年',
-        months     : ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-        week       : ['日', '一', '二', '三', '四', '五', '六'],
-        totodaytext: '今天'
-    }
+    // i18n
+    yearunit   : '年',
+    months     : ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+    week       : ['日', '一', '二', '三', '四', '五', '六'],
+    totodaytext: '今天'
 }
 
 // user vue-transfer-dom plugin
@@ -73,13 +72,15 @@ Vue.component('date-picker', {
     template: "<div class=\"datepicker-group\" @click=\"markEventFromPicker\" :class=\"{disabled:disabled}\" id=\"{{uid}}\">\n    <input @click=\"isshow = true\" value=\"{{value}}\" :disabled=\"disabled\" readonly=\"readonly\">\n    <i class=\"datepicker-icon\" @click=\"disabled || (isshow = !isshow)\"></i>\n</div>\n<div class=\"datepicker\" v-show=\"isshow\" v-click-outside=\"clickOutside\" @click=\"markEventFromPicker\" :style=\"style\" v-transfer-dom>\n    <div class=\"datepicker-header\">\n        <i class=\"datepicker-prev-year\" @click=\"year <= minYear || year--\" :class=\"{disabled: year <= minYear}\"></i> <!-- prev year -->\n        <i class=\"datepicker-prev-month\" @click=\"(year <= minYear && month <= 0) || setMonth(month - 1)\" :class=\"{disabled: year <= minYear && month <= 0}\"></i> <!-- prev month -->\n        <div class=\"datepicker-select datepicker-year\"> <!-- year select -->\n            <label>{{year + yearunit}}</label>\n            <select v-model=\"year\" number>\n                <option v-for=\"(index, item) in years\" value=\"{{item}}\" selected=\"{{$value == year}}\">{{item + yearunit}}</option>\n            </select>\n        </div>\n        <div class=\"datepicker-select datepicker-month\"> <!-- month select -->\n            <label>{{months[month]}}</label>\n            <select v-model=\"month\" number>\n                <option v-for=\"m in months\" value=\"{{$index}}\" selected=\"{{$value == month}}\">{{m}}</option>\n            </select>\n        </div>\n        <i class=\"datepicker-next-month\" @click=\"(year >= maxYear && month >= 11) || setMonth(month + 1)\" :class=\"{disabled: year >= maxYear && month >= 11}\"></i> <!-- next month -->\n        <i class=\"datepicker-next-year\" @click=\"year >= maxYear || year++\" :class=\"{disabled: year >= maxYear}\"></i> <!-- next year -->\n    </div>\n    <table class=\"datepicker-calendar\">\n        <thead>\n            <tr class=\"datepicker-dayofweek\">\n                <th v-for=\"w in week\">{{w}}</th>\n            </tr> <!-- week -->\n        </thead>\n        <tbody class=\"datepicker-days\">\n            <tr v-for=\"row in dates\">\n                <td v-for=\"cell in row\"\n                    :class=\"{istoday: cell.istoday, selected: cell.selected || (date === cell.value && month === selectedMonth && year === selectedYear), disabled: cell.disabled}\"\n                    @click=\"cell.disabled || selectDate(cell.value)\">\n                    {{cell.text}}\n                </td>\n            </tr>\n        </tbody> <!-- grid -->\n        <tfoot>\n            <tr>\n                <td colspan=\"7\"><span class=\"datepicker-today\" @click=\"toToday\">{{totodaytext}}</span></td> <!-- to today -->\n            </tr>\n        </tfoot>\n    </table>\n</div>\n",
     props: {
         isshow   : false,
-        theme    : '',
         value    : '',
         mindate  : '',
         format   : {default: defaultConf.format},
-        yearunit : {default: defaultConf.i18n.yearunit},
+        yearunit : {default: defaultConf.yearunit},
         yearrange: {
             type   : Array,
+            coerce : function (months) {
+                return Array.isArray(months) ? months : JSON.parse(months.replace(/\'/g, '"'))
+            },
             default: function () {
                 return defaultConf.yearrange
             }
@@ -89,7 +90,7 @@ Vue.component('date-picker', {
                 return Array.isArray(months) ? months : JSON.parse(months.replace(/\'/g, '"'))
             },
             default: function () {
-                return defaultConf.i18n.months
+                return defaultConf.months
             }
         },
         week: {
@@ -97,11 +98,20 @@ Vue.component('date-picker', {
                 return Array.isArray(days) ? days : JSON.parse(days.replace(/\'/g, '"'))
             },
             default: function () {
-                return defaultConf.i18n.week
+                return defaultConf.week
             }
         },
-        totodaytext: {default: defaultConf.i18n.totodaytext},
-        disabled   : false
+        totodaytext: {default: defaultConf.totodaytext},
+        disabled   : false,
+
+        conf: {
+            coerce: function (conf) {
+                return Vue.util.extend(conf, defaultConf)
+            },
+            default: function () {
+                return defaultConf
+            }
+        }
     },
     data: function () {
         return {
@@ -260,12 +270,11 @@ Vue.component('date-picker', {
 Vue.directive('click-outside', {
     bind: function () {
         var me = this
-        document.addEventListener('click', function () {
+        Vue.util.on(document, 'click', function () {
             var vm = me.vm
             vm.isshow && !vm.clickFromPicker && (vm.isshow = false)
         })
     }
 })
 
-return Datepicker;
-}));
+}))

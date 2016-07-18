@@ -43,18 +43,17 @@ function parseDateString (date, format) {
 // today
 var TODAY = parseDate(new Date)
 
-var idCounter    = 0
+var idCounter = 0
 
 var defaultConf = {
     format   : 'yyyy/mm/dd',
     yearrange: [2000, 2020],
 
-    i18n  : {
-        yearunit   : '年',
-        months     : ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-        week       : ['日', '一', '二', '三', '四', '五', '六'],
-        totodaytext: '今天'
-    }
+    // i18n
+    yearunit   : '年',
+    months     : ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+    week       : ['日', '一', '二', '三', '四', '五', '六'],
+    totodaytext: '今天'
 }
 
 // user vue-transfer-dom plugin
@@ -64,13 +63,15 @@ Vue.component('date-picker', {
     template: {gulp_inject: './datepicker.tpl'},
     props: {
         isshow   : false,
-        theme    : '',
         value    : '',
         mindate  : '',
         format   : {default: defaultConf.format},
-        yearunit : {default: defaultConf.i18n.yearunit},
+        yearunit : {default: defaultConf.yearunit},
         yearrange: {
             type   : Array,
+            coerce : function (months) {
+                return Array.isArray(months) ? months : JSON.parse(months.replace(/\'/g, '"'))
+            },
             default: function () {
                 return defaultConf.yearrange
             }
@@ -80,7 +81,7 @@ Vue.component('date-picker', {
                 return Array.isArray(months) ? months : JSON.parse(months.replace(/\'/g, '"'))
             },
             default: function () {
-                return defaultConf.i18n.months
+                return defaultConf.months
             }
         },
         week: {
@@ -88,11 +89,20 @@ Vue.component('date-picker', {
                 return Array.isArray(days) ? days : JSON.parse(days.replace(/\'/g, '"'))
             },
             default: function () {
-                return defaultConf.i18n.week
+                return defaultConf.week
             }
         },
-        totodaytext: {default: defaultConf.i18n.totodaytext},
-        disabled   : false
+        totodaytext: {default: defaultConf.totodaytext},
+        disabled   : false,
+
+        conf: {
+            coerce: function (conf) {
+                return Vue.util.extend(conf, defaultConf)
+            },
+            default: function () {
+                return defaultConf
+            }
+        }
     },
     data: function () {
         return {
@@ -251,7 +261,7 @@ Vue.component('date-picker', {
 Vue.directive('click-outside', {
     bind: function () {
         var me = this
-        document.addEventListener('click', function () {
+        Vue.util.on(document, 'click', function () {
             var vm = me.vm
             vm.isshow && !vm.clickFromPicker && (vm.isshow = false)
         })

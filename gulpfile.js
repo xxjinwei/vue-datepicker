@@ -2,6 +2,7 @@
  * @author jinwei01
  * @file gulpfile
  */
+var path         = require('path')
 var gulp         = require('gulp')
 var less         = require('gulp-less')
 var comb         = require('gulp-csscomb')
@@ -18,9 +19,26 @@ var autoprefixerConf = {
     browsers: ['ie >= 9', 'chrome > 30', 'Safari >= 6', 'ff >= 30', 'last 2 versions']
 }
 
+// umd conf
+var umdConf = {
+    dependencies: function (file) {
+        return [
+            {
+                name  : 'vue-transfer-dom',
+                amd   : './vue-transfer-dom',
+                cjs   : './vue-transfer-dom',
+                global: 'VueTransferDom',
+                param : 'VueTransferDom'
+            }
+        ]
+    },
+    template: path.join(__dirname, 'umd-template.js')
+}
+
 // static dir
 var srcDir  = 'src/'
 var distDir = 'dist/'
+var libDir  = 'lib/'
 
 // glob pattens
 var pattens = {
@@ -49,11 +67,16 @@ gulp.task('build-css', function () {
 })
 
 // build js
-gulp.task('build-js', function () {
+gulp.task('build-js', ['copy2dist'], function () {
     return gulp.src(pattens.js)
         .pipe(injectHtml())
-        .pipe(umd())
+        .pipe(umd(umdConf))
         .pipe(gulp.dest(distDir))
+})
+// copy to dist
+gulp.task('copy2dist', function () {
+    return gulp.src(libDir + '/*').
+    pipe(gulp.dest(distDir))
 })
 
 // build img
