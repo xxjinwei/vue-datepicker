@@ -259,6 +259,18 @@ form {
 /*******************************************************************************
 Full-Width Styles
 *******************************************************************************/
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+#header_wrap,
+#footer_wrap {
+    flex: 0
+}
+#main_content_wrap {
+    flex: 1;
+}
 
 .outer {
   width: 100%;
