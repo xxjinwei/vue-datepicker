@@ -77,7 +77,6 @@ Vue.component('date-picker', {
         format   : {default: defaultConf.format},
         yearunit : {default: defaultConf.yearunit},
         yearrange: {
-            type   : Array,
             coerce : function (months) {
                 return Array.isArray(months) ? months : JSON.parse(months.replace(/\'/g, '"'))
             },
@@ -105,12 +104,7 @@ Vue.component('date-picker', {
         disabled   : false,
 
         conf: {
-            coerce: function (conf) {
-                return Vue.util.extend(conf, defaultConf)
-            },
-            default: function () {
-                return defaultConf
-            }
+
         }
     },
     data: function () {
@@ -206,9 +200,22 @@ Vue.component('date-picker', {
                 this.selectedMonth = newDate.getMonth()
                 this.value         = this.formatDate(newDate)
             }
+        },
+        yearrange: function (newRange) {
+            this.minYear = newRange[0]
+            this.maxYear = newRange[1]
         }
     },
     beforeCompile: function () {
+        var me   = this
+        var conf = this.conf
+
+        if (conf) {
+            Object.keys(this.conf).forEach(function (item) {
+                me[item] = conf[item]
+            })
+        }
+
         this.selected = this.value && parseDate(this.value)
         this.value    = this.value && this.formatDate(this.value)
         this.minDate  = this.mindate && parseDate(this.mindate)
