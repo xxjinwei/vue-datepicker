@@ -31,9 +31,7 @@
             <tr v-for="row in dates">
                 <td v-for="cell in row"
                     :class="{istoday: cell.istoday, selected: cell.selected || (date === cell.value && month === selectedMonth && year === selectedYear), disabled: cell.disabled}"
-                    @click="cell.disabled || selectDate(cell.value)">
-                    {{cell.text}}
-                </td>
+                    @click="cell.value && !cell.disabled && selectDate(cell.value)">{{cell.text}}</td>
             </tr>
         </tbody> <!-- grid -->
         <tfoot>
