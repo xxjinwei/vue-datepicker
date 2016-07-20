@@ -1,7 +1,7 @@
 # vue-datepicker
 baidu-style datepicker by vue
 
-## how to use
+## How to use
 
 ### dependencies
 
