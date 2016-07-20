@@ -5,9 +5,9 @@ baidu-style datepicker by vue
 
 ### dependencies
 
-1. ```dist/datepicker.css```
+1. dist/datepicker.css
 
-2. ```vue-transfer-dom.js```
+2. vue-transfer-dom.js
 
 ### use
 
