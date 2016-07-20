@@ -1,6 +1,8 @@
 # vue-datepicker
 baidu-style datepicker by vue
 
+Try the [demo](https://xxjinwei.github.io/vue-datepicker/)
+
 ## How to use
 
 ### dependencies
