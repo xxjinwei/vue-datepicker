@@ -65,7 +65,7 @@ var picker = vm.$refs.dp1
 
 picker.setDate('2016/7/7')
 
-pickr.setMindate('2016/7/7')
+picker.setMindate('2016/7/7')
 
 picker.getDate() // return Date
 
