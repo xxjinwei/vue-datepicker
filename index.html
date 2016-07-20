@@ -12,6 +12,10 @@
 
     <link rel="stylesheet" type="text/css" href="dist/reset.css">
     <link rel="stylesheet" type="text/css" href="dist/datepicker.css">
+
+    <script src="dist/vue.js"></script>
+    <script src="dist/vue-transfer-dom.js"></script>
+    <script src="dist/datepicker.js"></script>
   </head>
 
   <body>
@@ -49,7 +53,7 @@
 
          <div class="example-item">
              <h3>With Value</h3>
-             <date-picker value="2016/7/25"></date-picker>
+             <date-picker value="2016/7/25" mindate="2016/7/8"></date-picker>
          </div>
 
          <div class="example-item">
@@ -77,9 +81,7 @@
       </footer>
     </div>
 
-    <script src="dist/vue.js"></script>
-    <script src="dist/vue-transfer-dom.js"></script>
-    <script src="dist/datepicker.js"></script>
+
     <script>
       var vm = new Vue({
           el: 'body'
