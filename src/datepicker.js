@@ -62,9 +62,9 @@ Vue.use(VueTransferDom)
 Vue.component('date-picker', {
     template: {gulp_inject: './datepicker.tpl'},
     props: {
-        isshow   : false,
-        value    : '',
-        mindate  : '',
+        isshow   : {},
+        value    : {},
+        mindate  : {},
         format   : {default: defaultConf.format},
         yearunit : {default: defaultConf.yearunit},
         yearrange: {
@@ -92,11 +92,11 @@ Vue.component('date-picker', {
             }
         },
         totodaytext: {default: defaultConf.totodaytext},
-        disabled   : false,
+        disabled   : {
+            type: Boolean
+        },
 
-        conf: {
-
-        }
+        conf: {default: function () {return {}}}
     },
     data: function () {
         return {
