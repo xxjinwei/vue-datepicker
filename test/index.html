@@ -43,12 +43,12 @@
         </div>
 
         <div style="padding: 30px" id="datepicker3">
-            <date-picker :conf="datepickerConf"></date-picker>
+            <date-picker :conf.sync="datepickerConf"></date-picker>
         </div>
 
         <div style="padding: 30px" id="datepicker4">
-            <date-picker disabled></date-picker>
-            <date-picker disabled="disabled"></date-picker>
+            <date-picker disabled v-ref:dp4></date-picker>
+            <date-picker disabled="disabled" value="2016/6/6"></date-picker>
         </div>
 
         <script>

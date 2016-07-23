@@ -2,6 +2,7 @@
     <input @click="isshow = true" value="{{value}}" :disabled="disabled" readonly="readonly">
     <i class="datepicker-icon" @click="disabled || (isshow = !isshow)"></i>
 </div>
+<template v-if="!disabled">
 <div class="datepicker" v-show="isshow" v-click-outside="clickOutside" @click="markEventFromPicker" :style="style" v-transfer-dom>
     <div class="datepicker-header">
         <i class="datepicker-prev-year" @click="year <= minYear || year--" :class="{disabled: year <= minYear}"></i> <!-- prev year -->
@@ -41,3 +42,4 @@
         </tfoot>
     </table>
 </div>
+</template>
