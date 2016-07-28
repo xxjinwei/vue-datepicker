@@ -16,6 +16,7 @@
     <script src="dist/vue.js"></script>
     <script src="dist/vue-transfer-dom.js"></script>
     <script src="dist/datepicker.js"></script>
+    <script src="dist/datepicker-range.js"></script>
   </head>
 
   <body>
@@ -41,10 +42,10 @@
 
          <style>
             .example-item {
-                margin-bottom: 20px;
+                margin-bottom: 60px;
             }
          </style>
-
+         <h1>datepicker</h1>
          <div class="example-item">
              <h3>Default<h3>
              <date-picker></date-picker>
@@ -69,7 +70,15 @@
                 mindate="2016/07/10"
                 >
             </date-picker>
+        </div>
+        <hr>
+        <h1>datepicker range</h1>
+        <div class="example-item">
+            <h3>interval 3 days</h3>
+            <date-range-picker interval="3" start-date="2016/7/7" end-date="2016/7/11"></date-range-picker>
+        </div>
 
+        <div style="height: 300px"></div>
       </section>
     </div>
 
