@@ -235,7 +235,7 @@ var DatePicker = Vue.extend({
         setPosition: function () {
             var rect = this._input.getBoundingClientRect()
             this.style.left = rect.left + 'px'
-            this.style.top  = rect.bottom + 'px'
+            this.style.top  = (rect.bottom + window.scrollY) + 'px'
         },
         markEventFromPicker: function () {
             var me = this
