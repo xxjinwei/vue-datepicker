@@ -28,10 +28,10 @@ var defaultConf = {
     totodaytext: '今天'
 }
 
-// user vue-transfer-dom plugin
+// use vue-transfer-dom plugin
 Vue.use(VueTransferDom)
 
-Vue.component('date-picker', {
+var DatePicker = Vue.extend({
     template: "<div class=\"datepicker-group\" @click=\"markEventFromPicker\" :class=\"{disabled:disabled}\" id=\"{{uid}}\">\n    <input @click=\"isshow = true\" value=\"{{value}}\" :disabled=\"disabled\" readonly=\"readonly\">\n    <i class=\"datepicker-icon\" @click=\"disabled || (isshow = !isshow)\"></i>\n</div>\n<template v-if=\"!disabled\">\n<div class=\"datepicker\" v-show=\"isshow\" v-click-outside=\"clickOutside\" @click=\"markEventFromPicker\" :style=\"style\" v-transfer-dom>\n    <div class=\"datepicker-header\">\n        <i class=\"datepicker-prev-year\" @click=\"year <= minYear || year--\" :class=\"{disabled: year <= minYear}\"></i> <!-- prev year -->\n        <i class=\"datepicker-prev-month\" @click=\"(year <= minYear && month <= 0) || setMonth(month - 1)\" :class=\"{disabled: year <= minYear && month <= 0}\"></i> <!-- prev month -->\n        <div class=\"datepicker-select datepicker-year\"> <!-- year select -->\n            <label>{{year + yearunit}}</label>\n            <select v-model=\"year\" number>\n                <option v-for=\"(index, item) in years\" value=\"{{item}}\" selected=\"{{$value == year}}\">{{item + yearunit}}</option>\n            </select>\n        </div>\n        <div class=\"datepicker-select datepicker-month\"> <!-- month select -->\n            <label>{{months[month]}}</label>\n            <select v-model=\"month\" number>\n                <option v-for=\"m in months\" value=\"{{$index}}\" selected=\"{{$value == month}}\">{{m}}</option>\n            </select>\n        </div>\n        <i class=\"datepicker-next-month\" @click=\"(year >= maxYear && month >= 11) || setMonth(month + 1)\" :class=\"{disabled: year >= maxYear && month >= 11}\"></i> <!-- next month -->\n        <i class=\"datepicker-next-year\" @click=\"year >= maxYear || year++\" :class=\"{disabled: year >= maxYear}\"></i> <!-- next year -->\n    </div>\n    <table class=\"datepicker-calendar\">\n        <thead>\n            <tr class=\"datepicker-dayofweek\">\n                <th v-for=\"w in week\">{{w}}</th>\n            </tr> <!-- week -->\n        </thead>\n        <tbody class=\"datepicker-days\">\n            <tr v-for=\"row in dates\">\n                <td v-for=\"cell in row\"\n                    :class=\"{istoday: cell.istoday, selected: cell.selected || (date === cell.value && month === selectedMonth && year === selectedYear), disabled: cell.disabled}\"\n                    @click=\"cell.value && !cell.disabled && selectDate(cell.value)\">{{cell.text}}</td>\n            </tr>\n        </tbody> <!-- grid -->\n        <tfoot>\n            <tr>\n                <td colspan=\"7\"><span class=\"datepicker-today\" @click=\"toToday\">{{totodaytext}}</span></td> <!-- to today -->\n            </tr>\n        </tfoot>\n    </table>\n</div>\n</template>\n",
     props: {
         isshow   : {},
@@ -85,7 +85,9 @@ Vue.component('date-picker', {
             selectedDate : undefined,
 
             uid  : 'dp__' + idCounter++,
-            style: {left: undefined, top: undefined}
+            style: {left: undefined, top: undefined},
+
+            onPick: noop
         }
     },
     computed: {
@@ -161,6 +163,9 @@ Vue.component('date-picker', {
                 this.selectedYear  = newDate.getFullYear()
                 this.selectedMonth = newDate.getMonth()
                 this.value         = this.formatDate(newDate)
+
+                // trigger select callback
+                this.onPick.call(this, this.selected)
             }
         },
         yearrange: function (newRange) {
@@ -178,7 +183,7 @@ Vue.component('date-picker', {
         var conf = this.conf
 
         if (conf) {
-            Object.keys(this.conf).forEach(function (item) {
+            Object.keys(conf).forEach(function (item) {
                 me[item] = conf[item]
             })
         }
@@ -261,6 +266,11 @@ Vue.directive('click-outside', {
     }
 })
 
+
+Vue.component('date-picker', DatePicker)
+
+
+
 function getSizeOfMonth (month, year) {
     var isLeapYear = year % 4 === 0 && year % 100 !== 0 || year % 400 === 0
     return [31, (isLeapYear ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
@@ -297,5 +307,7 @@ function format (date, format) {
         return ret
     })
 }
+function noop () {}
 
+return DatePicker;
 }))

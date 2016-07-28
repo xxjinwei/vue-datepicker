@@ -42,14 +42,12 @@ var libDir  = 'lib/'
 
 // glob pattens
 var pattens = {
+    'js'  : [srcDir + '**/*.js'],
     'less': [
         srcDir + '**/*.less'
     ],
-    'js': [
-        srcDir + '**/*.js'
-    ],
     'tpl': [
-        srcDir = '**/*.tpl'
+        srcDir + '**/*.tpl'
     ],
     'img': ['png', 'gif', 'jpg', 'jpeg', 'webp', 'svg'].map(function (type) {
         return srcDir + '**/*.' + type
@@ -66,13 +64,56 @@ gulp.task('build-css', function () {
         .pipe(gulp.dest(distDir))
 })
 
-// build js
-gulp.task('build-js', ['copy2dist'], function () {
-    return gulp.src(pattens.js)
+// build datepicker
+gulp.task('build-picker', function () {
+    return gulp.src([srcDir + 'datepicker.js'])
         .pipe(injectHtml())
-        .pipe(umd(umdConf))
+        .pipe(umd({
+            dependencies: function (file) {
+                return [
+                    {
+                        name   : 'vue-transfer-dom',
+                        amd    : './vue-transfer-dom',
+                        cjs    : './vue-transfer-dom',
+                        global : 'VueTransferDom',
+                        param  : 'VueTransferDom'
+                    }
+                ]
+            },
+            exports: function (file) {
+                return 'DatePicker'
+            },
+            template: path.join(__dirname, 'umd-template.js')
+        }))
         .pipe(gulp.dest(distDir))
 })
+
+// build datepicker range
+gulp.task('build-range', function () {
+    return gulp.src([srcDir + 'datepicker-range.js'])
+        .pipe(injectHtml())
+        .pipe(umd({
+            dependencies: function (file) {
+                return [
+                    {
+                        name   : 'datepicker',
+                        amd    : './datepicker',
+                        cjs    : './datepicker',
+                        global : 'DatePicker',
+                        param  : 'DatePicker'
+                    }
+                ]
+            },
+            exports: function (file) {
+                return 'DatePickerRange'
+            },
+            template: path.join(__dirname, 'umd-template.js')
+        }))
+        .pipe(gulp.dest(distDir))
+})
+
+// build
+gulp.task('build-js', ['build-picker', 'build-range', 'copy2dist'], function () {})
 // copy to dist
 gulp.task('copy2dist', function () {
     return gulp.src(libDir + '/*').

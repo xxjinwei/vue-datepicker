@@ -12,8 +12,8 @@
         <script src="../dist/vue.js"></script>
         <script src="../dist/vue-transfer-dom.js"></script>
         <script src="../dist/datepicker.js"></script>
-        <!-- <script src="http://apps.bdimg.com/libs/require.js/2.1.11/require.min.js"></script> -->
-        <!-- <script>
+        <!-- <script src="http://apps.bdimg.com/libs/require.js/2.1.11/require.min.js"></script>
+        <script>
             require(['../dist/datepicker'], function () {
                 var vm = new Vue({
                     el: 'body'
@@ -63,7 +63,10 @@
                         totodaytext: '跳到今天',
                         format     : 'yyyy.mm.dd',
                         value      : '2016/7/12',
-                        mindate    : '2016/7/4'
+                        mindate    : '2016/7/4',
+                        onPick     : function (selected) {
+                            console.log(selected)
+                        }
                     }
                 }
             })

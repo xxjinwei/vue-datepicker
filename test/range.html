@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>vue-datepicker</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="../dist/reset.css">
+        <link rel="stylesheet" href="../dist/datepicker.css">
+        <script src="../dist/vue.js"></script>
+        <script src="../dist/vue-transfer-dom.js"></script>
+        <script src="../dist/datepicker.js"></script>
+        <script src="../dist/datepicker-range.js"></script>
+    </head>
+    <body>
+
+        <div style="padding: 30px" id="datepicker1">
+            <h3>间隔3天</h3>
+            <date-range-picker interval="3" start-date="2016/7/7" end-date="2016/7/11"></date-range-picker>
+        </div>
+
+        <div style="padding: 30px" id="datepicker1">
+            <h3>间隔4天</h3>
+            <date-range-picker :conf="rangeConf" v-ref:range2></date-range-picker>
+        </div>
+
+        <script>
+            var vm = new Vue({
+                el: 'body',
+                data:  {
+                    rangeConf: {
+                        interval : 4,
+                        startDate: '2016/7/7',
+                        endDate  : '2016/7/14'
+                    }
+                }
+            })
+            console.log(vm.$refs.range2.getDate())
+        </script>
+
+    </body>
+
+</html>

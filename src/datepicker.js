@@ -19,10 +19,10 @@ var defaultConf = {
     totodaytext: '今天'
 }
 
-// user vue-transfer-dom plugin
+// use vue-transfer-dom plugin
 Vue.use(VueTransferDom)
 
-Vue.component('date-picker', {
+var DatePicker = Vue.extend({
     template: {gulp_inject: './datepicker.tpl'},
     props: {
         isshow   : {},
@@ -76,7 +76,9 @@ Vue.component('date-picker', {
             selectedDate : undefined,
 
             uid  : 'dp__' + idCounter++,
-            style: {left: undefined, top: undefined}
+            style: {left: undefined, top: undefined},
+
+            onPick: noop
         }
     },
     computed: {
@@ -152,6 +154,9 @@ Vue.component('date-picker', {
                 this.selectedYear  = newDate.getFullYear()
                 this.selectedMonth = newDate.getMonth()
                 this.value         = this.formatDate(newDate)
+
+                // trigger select callback
+                this.onPick.call(this, this.selected)
             }
         },
         yearrange: function (newRange) {
@@ -169,7 +174,7 @@ Vue.component('date-picker', {
         var conf = this.conf
 
         if (conf) {
-            Object.keys(this.conf).forEach(function (item) {
+            Object.keys(conf).forEach(function (item) {
                 me[item] = conf[item]
             })
         }
@@ -252,6 +257,11 @@ Vue.directive('click-outside', {
     }
 })
 
+
+Vue.component('date-picker', DatePicker)
+
+
+
 function getSizeOfMonth (month, year) {
     var isLeapYear = year % 4 === 0 && year % 100 !== 0 || year % 400 === 0
     return [31, (isLeapYear ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
@@ -288,3 +298,4 @@ function format (date, format) {
         return ret
     })
 }
+function noop () {}

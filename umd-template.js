@@ -8,4 +8,5 @@
   }
 }(this, function(<%= param %>) {
 <%= contents %>
+return <%= exports %>;
 }))
