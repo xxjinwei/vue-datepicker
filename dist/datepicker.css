@@ -2,11 +2,51 @@
  * @file datepicker
  * @author jinwei01
  */
+.datepicker *,
+.datepicker-group * {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-size: 100%;
+    font-weight: normal;
+    background: transparent;
+    line-height: 1;
+}
+.datepicker,
+.datepicker-group,
+.datepicker *,
+.datepicker-group *,
+.datepicker *:before,
+.datepicker-group *:before,
+.datepicker *:after,
+.datepicker-group *:after {
+    box-sizing: border-box;
+}
+.datepicker table,
+.datepicker-group table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.datepicker th,
+.datepicker-group th {
+    font-weight: bold;
+    vertical-align: bottom;
+}
+.datepicker td,
+.datepicker-group td {
+    font-weight: normal;
+    vertical-align: top;
+}
+.datepicker input,
+.datepicker-group input,
+.datepicker select,
+.datepicker-group select {
+    font: inherit;
+}
 .datepicker {
     position: absolute;
     z-index: 1;
     font-size: 12px;
-    line-height: 1;
     color: #333;
     border: 1px solid #4497ff;
     background-color: #fff;
@@ -50,7 +90,6 @@
     height: 30px;
     line-height: 30px;
     cursor: pointer;
-    background-clip: content-box;
 }
 .datepicker-calendar tbody td.hidden,
 .datepicker-calendar tbody td:empty {
@@ -113,6 +152,7 @@
 .datepicker-select label {
     display: block;
     text-align: center;
+    white-space: nowrap;
 }
 .datepicker-select select {
     position: absolute;
@@ -222,14 +262,13 @@
     display: inline-table;
     box-shadow: 0 0 0 1px #ccc inset;
     font-size: 12px;
-    line-height: 1;
     background-color: #fff;
 }
 .datepicker-group > * {
     display: table-cell;
 }
 .datepicker-group > input {
-    width: 7em;
+    width: 8em;
     background: transparent !important;
     vertical-align: middle;
     height: 28px;
@@ -271,4 +310,8 @@
 }
 .datepicker-group.active .datepicker-icon:before {
     background-position: 0 -19px;
+}
+.datepicker-delimitor {
+    margin-left: 2px;
+    margin-right: 6px;
 }

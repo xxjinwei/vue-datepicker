@@ -3,6 +3,8 @@ baidu-style datepicker by vue
 
 Try the [demo](https://xxjinwei.github.io/vue-datepicker/)
 
+the datepicker-range [documentation](https://github.com/xxjinwei/vue-datepicker/blob/master/README2.md)
+
 ## How to use
 
 ### dependencies

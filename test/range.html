@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="../dist/reset.css">
+        <!-- <link rel="stylesheet" href="../dist/reset.css"> -->
         <link rel="stylesheet" href="../dist/datepicker.css">
         <script src="../dist/vue.js"></script>
         <script src="../dist/vue-transfer-dom.js"></script>
@@ -33,7 +33,18 @@
                     rangeConf: {
                         interval : 4,
                         startDate: '2016/7/7',
-                        endDate  : '2016/7/14'
+                        endDate  : '2016/7/14',
+                        months     : ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                        week       : ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+                        yearunit   : '',
+                        yearrange  : [2008, 2016],
+                        totodaytext: '跳到今天',
+                        format     : 'yyyy.mm.dd',
+                        value      : '2016/7/12',
+                        mindate    : '2016/7/4',
+                        onPick     : function (selected) {
+                            console.log(selected)
+                        }
                     }
                 }
             })

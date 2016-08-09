@@ -22,7 +22,7 @@
         <i class="datepicker-next-month" @click="(year >= maxYear && month >= 11) || setMonth(month + 1)" :class="{disabled: year >= maxYear && month >= 11}"></i> <!-- next month -->
         <i class="datepicker-next-year" @click="year >= maxYear || year++" :class="{disabled: year >= maxYear}"></i> <!-- next year -->
     </div>
-    <table class="datepicker-calendar">
+    <table cellspacing="0" class="datepicker-calendar">
         <thead>
             <tr class="datepicker-dayofweek">
                 <th v-for="w in week">{{w}}</th>
