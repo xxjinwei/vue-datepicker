@@ -63,11 +63,12 @@
 
 .@{component-name} {
     position: absolute;
-    z-index: 1;
+    z-index: 9999;
     font-size: 12px;
     color: @normal-color;
     border: 1px solid @active-color;
     background-color: @white;
+    margin: 0;
     user-select: none;
 }
 // header
@@ -310,18 +311,19 @@
 // datepicker group
 .@{component-name}-group {
        display: inline-table;
-       box-shadow: 0 0 0 1px @silver inset;
+       // box-shadow: 0 0 0 1px @silver inset;
+       border: 1px solid #d9d9d9;
+       border-radius: 3px;
        font-size: 12px;
        background-color: @white;
        > * {
            display: table-cell;
        }
        > input {
-           @group-height: 30px;
+           @group-height: 32px;
            @input-padding-hoziron: unit(10 / 12, em);
            @disabled-color: @silver;
            @disabled-bg-color: #f6f8f9;
-           @input-rounded: 2px;
            @input-border-color: @default-border-color;
 
            width: 8em;
@@ -374,6 +376,10 @@
 }
 // daterange delimitor
 .@{component-name}-delimitor {
+    display: inline-block;
+    vertical-align: top;
+    height: 30px;
+    line-height: 30px;
     margin-left: 2px;
     margin-right: 6px;
 }

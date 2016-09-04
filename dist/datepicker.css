@@ -45,11 +45,12 @@
 }
 .datepicker {
     position: absolute;
-    z-index: 1;
+    z-index: 9999;
     font-size: 12px;
     color: #333;
     border: 1px solid #4497ff;
     background-color: #fff;
+    margin: 0;
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
@@ -260,7 +261,8 @@
 }
 .datepicker-group {
     display: inline-table;
-    box-shadow: 0 0 0 1px #ccc inset;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
     font-size: 12px;
     background-color: #fff;
 }
@@ -271,8 +273,8 @@
     width: 8em;
     background: transparent !important;
     vertical-align: middle;
-    height: 28px;
-    line-height: 28px;
+    height: 30px;
+    line-height: 30px;
     padding-left: .83333333em;
     padding-right: .83333333em;
     border: none;
@@ -312,6 +314,10 @@
     background-position: 0 -19px;
 }
 .datepicker-delimitor {
+    display: inline-block;
+    vertical-align: top;
+    height: 30px;
+    line-height: 30px;
     margin-left: 2px;
     margin-right: 6px;
 }

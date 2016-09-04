@@ -64,6 +64,14 @@ gulp.task('build-css', function () {
         .pipe(gulp.dest(distDir))
 })
 
+var vue_define = {
+    name  : 'vue',
+    amd   : '../lib/vue',
+    cjs   : '../lib/vue',
+    global: 'Vue',
+    param : 'Vue'
+}
+
 // build datepicker
 gulp.task('build-picker', function () {
     return gulp.src([srcDir + 'datepicker.js'])
@@ -71,6 +79,8 @@ gulp.task('build-picker', function () {
         .pipe(umd({
             dependencies: function (file) {
                 return [
+                    vue_define,
+
                     {
                         name   : 'vue-transfer-dom',
                         amd    : './vue-transfer-dom',
@@ -95,6 +105,8 @@ gulp.task('build-range', function () {
         .pipe(umd({
             dependencies: function (file) {
                 return [
+                    vue_define,
+                    
                     {
                         name   : 'datepicker',
                         amd    : './datepicker',

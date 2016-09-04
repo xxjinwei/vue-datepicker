@@ -1,5 +1,5 @@
 <div class="datepicker-group" @click="markEventFromPicker" :class="{disabled:disabled}" id="{{uid}}">
-    <input @click="isshow = true" value="{{value}}" :disabled="disabled" readonly="readonly">
+    <input @click="isshow = true" v-model="value" :disabled="disabled" readonly="readonly">
     <i class="datepicker-icon" @click="disabled || (isshow = !isshow)"></i>
 </div>
 <template v-if="!disabled">
@@ -37,7 +37,7 @@
         </tbody> <!-- grid -->
         <tfoot>
             <tr>
-                <td colspan="7"><span class="datepicker-today" @click="toToday">{{totodaytext}}</span></td> <!-- to today -->
+                <td colspan="7"><span class="datepicker-today" @click="toToday">{{totodaytext}}</span></td>
             </tr>
         </tfoot>
     </table>
