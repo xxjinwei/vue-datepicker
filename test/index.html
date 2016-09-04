@@ -14,7 +14,7 @@
         <script src="../dist/datepicker.js"></script> -->
         <script src="http://apps.bdimg.com/libs/require.js/2.1.11/require.min.js"></script>
         <script>
-            require(['../dist/vue', '../dist/datepicker'], function (Vue) {
+            require(['../dist/vue', '../dist/datepicker'], function (Vue, DatePikcer) {
                 var vm = new Vue({
                     el: 'body',
                     data: {
@@ -31,6 +31,9 @@
                                 console.log(selected)
                             }
                         }
+                    },
+                    components: {
+                        'xx-date': DatePikcer
                     }
                 })
 
@@ -72,6 +75,10 @@
         <div style="padding: 30px" id="datepicker4">
             <date-picker disabled v-ref:dp4></date-picker>
             <date-picker disabled="disabled" value="2016/6/6"></date-picker>
+        </div>
+
+        <div style="padding: 30px" id="datepicker5">
+            <xx-date></xx-date>
         </div>
 
         <!-- <script>
