@@ -9,17 +9,40 @@
 
         <!-- <link rel="stylesheet" href="../dist/reset.css"> -->
         <link rel="stylesheet" href="../dist/datepicker.css">
-        <script src="../dist/vue.js"></script>
+        <!-- <script src="../dist/vue.js"></script>
         <script src="../dist/vue-transfer-dom.js"></script>
-        <script src="../dist/datepicker.js"></script>
-        <!-- <script src="http://apps.bdimg.com/libs/require.js/2.1.11/require.min.js"></script>
+        <script src="../dist/datepicker.js"></script> -->
+        <script src="http://apps.bdimg.com/libs/require.js/2.1.11/require.min.js"></script>
         <script>
-            require(['../dist/datepicker'], function () {
+            require(['../dist/vue', '../dist/datepicker'], function (Vue) {
                 var vm = new Vue({
-                    el: 'body'
+                    el: 'body',
+                    data: {
+                        datepickerConf: {
+                            months     : ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                            week       : ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+                            yearunit   : '',
+                            yearrange  : [2008, 2016],
+                            totodaytext: '跳到今天',
+                            format     : 'yyyy.mm.dd',
+                            value      : '2016/7/12',
+                            mindate    : '2016/7/4',
+                            onPick     : function (selected) {
+                                console.log(selected)
+                            }
+                        }
+                    }
                 })
+
+                var picker = vm.$refs.datepicker2
+
+                picker.setDate('2016/7/7')
+
+                // picker.disable()
+
+                console.log(picker.getDate(), picker.getDateString())
             })
-        </script> -->
+        </script>
     </head>
     <body>
 
@@ -51,7 +74,7 @@
             <date-picker disabled="disabled" value="2016/6/6"></date-picker>
         </div>
 
-        <script>
+        <!-- <script>
             var vm = new Vue({
                 el: 'body',
                 data: {
@@ -79,7 +102,7 @@
 
             console.log(picker.getDate(), picker.getDateString())
 
-        </script>
+        </script> -->
 
     </body>
 

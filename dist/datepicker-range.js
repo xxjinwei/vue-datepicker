@@ -1,8 +1,8 @@
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define(['../lib/vue', './datepicker'], factory)
+    define(['./vue', './datepicker'], factory)
   } else if (typeof exports === 'object') {
-    factory(require('../lib/vue'), require('./datepicker'))
+    factory(require('./vue'), require('./datepicker'))
   } else {
     factory(root.Vue, root.DatePicker)
   }

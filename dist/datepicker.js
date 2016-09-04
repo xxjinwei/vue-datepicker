@@ -1,8 +1,8 @@
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define(['../lib/vue', './vue-transfer-dom'], factory)
+    define(['./vue', './vue-transfer-dom'], factory)
   } else if (typeof exports === 'object') {
-    factory(require('../lib/vue'), require('./vue-transfer-dom'))
+    factory(require('./vue'), require('./vue-transfer-dom'))
   } else {
     factory(root.Vue, root.VueTransferDom)
   }

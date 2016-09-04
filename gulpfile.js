@@ -66,8 +66,8 @@ gulp.task('build-css', function () {
 
 var vue_define = {
     name  : 'vue',
-    amd   : '../lib/vue',
-    cjs   : '../lib/vue',
+    amd   : './vue',
+    cjs   : './vue',
     global: 'Vue',
     param : 'Vue'
 }
@@ -106,7 +106,7 @@ gulp.task('build-range', function () {
             dependencies: function (file) {
                 return [
                     vue_define,
-                    
+
                     {
                         name   : 'datepicker',
                         amd    : './datepicker',
